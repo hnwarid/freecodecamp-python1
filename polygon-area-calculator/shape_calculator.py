@@ -29,7 +29,6 @@ class Rectangle:
     def __str__(self):
         return "Rectangle(width={}, height={})".format(self.width, self.height)
 
-
 class Square(Rectangle):
     def __init__(self, width):
         super().__init__(width, width)
