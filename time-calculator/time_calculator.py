@@ -15,7 +15,7 @@ def add_time(start, duration, day=None):
     if sum_min > 60:
         sum_min %= 60
         sum_hr += 1
-    days_adds = sum_hr // 24
+    days_add = sum_hr // 24
     sum_hr %= 24
 
     if sum_hr > 12:
@@ -30,25 +30,25 @@ def add_time(start, duration, day=None):
         sum_min = "0" + str(sum_min)
 
     if day is None:
-        if days_adds == 0:
+        if days_add == 0:
             new_time = "{}:{} {}".format(sum_hr, sum_min, meridian)
-        elif days_adds == 1:
+        elif days_add == 1:
             new_time = "{}:{} {} (next day)".format(sum_hr, sum_min, meridian)
         else:
-            new_time = "{}:{} {} ({} days later)".format(sum_hr, sum_min, meridian, days_adds)
+            new_time = "{}:{} {} ({} days later)".format(sum_hr, sum_min, meridian, days_add)
 
     elif day is not None:
         day = day.lower().capitalize()
         day_value = days_dict[day]
-        day_value += days_adds
+        day_value += days_add
         if day_value > 7:
             day_value %= 7
         day = days_list[day_value]
-        if days_adds == 0:
+        if days_add == 0:
             new_time = "{}:{} {}, {}".format(sum_hr, sum_min, meridian, day)
-        elif days_adds == 1:
+        elif days_add == 1:
             new_time = "{}:{} {}, {} (next day)".format(sum_hr, sum_min, meridian, day)
         else:
-            new_time = "{}:{} {}, {} ({} days later)".format(sum_hr, sum_min, meridian, day, days_adds)
+            new_time = "{}:{} {}, {} ({} days later)".format(sum_hr, sum_min, meridian, day, days_add)
 
     return new_time
