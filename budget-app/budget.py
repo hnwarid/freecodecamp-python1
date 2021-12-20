@@ -51,9 +51,31 @@ def create_spend_chart(categories):
         for item in category.ledger:
             if item["amount"] < 0:
                 spending_list.append(item["amount"])
-    print(f"Spending: {spending_list} with categories as follows: {category_names}")
-    print(f"Category total: {sum(spending_list)} with the list as follows:\n {spending_list}")
+
+    total = round(sum(spending_list), 2)
+
+    print(
+        f"Spending: {spending_list} with categories as follows: {category_names} and categories total: {total}")
+
+    for spending in spending_list:
+        percentage = spending/total * 100
+        spending_percentage.append(round(percentage))
+    print(f"Spending percentage is {spending_percentage} with total {sum(spending_percentage)}")
 
     # create the chart from spending percentage
+    graph = "Percentage spent by category\n"
+    for i in range(100, -10, -10):
+        graph += str(i).rjust(3) + "| "
+        for spending in spending_percentage:
+            if spending < i:
+                graph += "   "
+            elif spending >= i:
+                graph += "o  "
+        graph += "\n"
+    graph += "    -" + ("---" * (len(category_names)))
+
 
     # create the title of budget name
+
+
+    return graph
