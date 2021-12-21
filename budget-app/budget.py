@@ -47,10 +47,12 @@ def create_spend_chart(categories):
     # create spending percentage from category in categories
     for category in categories:
         category_names.append(category.name)
-
+        spending_total = 0
         for item in category.ledger:
             if item["amount"] < 0:
-                spending_list.append(item["amount"])
+                spending_total += item["amount"]
+        spending_list.append(spending_total)  # the problem really is here.
+                # create a total THEN append to spending_list
 
     total = round(sum(spending_list), 2)
 
