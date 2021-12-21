@@ -44,40 +44,47 @@ def create_spend_chart(categories):
     category_names = []
     spending_list = []
     spending_percentage = []
+
     # create spending percentage from category in categories
     for category in categories:
-        category_names.append(category.name)
         spending_total = 0
+        category_names.append(category.name)
         for item in category.ledger:
             if item["amount"] < 0:
                 spending_total += item["amount"]
-        spending_list.append(spending_total)  # the problem really is here.
-                # create a total THEN append to spending_list
-
-    total = round(sum(spending_list), 2)
-
-    print(
-        f"Spending: {spending_list} with categories as follows: {category_names} and categories total: {total}")
-
+        spending_list.append(spending_total)
     for spending in spending_list:
-        percentage = spending/total * 100
-        spending_percentage.append(round(percentage))
-    print(f"Spending percentage is {spending_percentage} with total {sum(spending_percentage)}")
+        percentage = round(spending/sum(spending_list) * 100)
+        spending_percentage.append(percentage)
 
     # create the chart from spending percentage
-    graph = "Percentage spent by category\n"
+    chart = "Percentage spent by category\n"
     for i in range(100, -10, -10):
-        graph += str(i).rjust(3) + "| "
+        chart += str(i).rjust(3) + "| "
         for spending in spending_percentage:
             if spending < i:
-                graph += "   "
+                chart += "   "
             elif spending >= i:
-                graph += "o  "
-        graph += "\n"
-    graph += "    -" + ("---" * (len(category_names)))
-
+                chart += "o  "
+        chart += "\n"
+    chart += "    -" + ("---" * (len(category_names))) + "\n"
 
     # create the title of budget name
+    len_cat_name = 0
+    for cat_name in category_names:
+        if len(cat_name) > len_cat_name:
+            len_cat_name = len(cat_name)
+
+    for i in range(len_cat_name):
+        chart += "     "
+        for cat_name in category_names:
+            if i > len(cat_name[:i]):
+                chart += "   "
+            elif len(cat_name) > i:
+                chart += cat_name[i] + "  "
+            else:
+                chart += "   "
+        chart += "\n"
 
 
-    return graph
+    return chart
