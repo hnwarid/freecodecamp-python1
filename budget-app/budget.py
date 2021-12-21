@@ -42,8 +42,8 @@ class Category:
 
 def create_spend_chart(categories):
     category_names = []
-    spending_list = []
-    spending_percentage = []
+    spendings = []
+    percentages = []
 
     # create spending percentage from category in categories
     for category in categories:
@@ -52,39 +52,39 @@ def create_spend_chart(categories):
         for item in category.ledger:
             if item["amount"] < 0:
                 spending_total += item["amount"]
-        spending_list.append(spending_total)
-    for spending in spending_list:
-        percentage = round(spending/sum(spending_list) * 100)
-        spending_percentage.append(percentage)
+        spendings.append(spending_total)
+    for spending in spendings:
+        percentage = round(spending/sum(spendings) * 100)
+        percentages.append(percentage)
 
     # create the chart from spending percentage
     chart = "Percentage spent by category\n"
     for i in range(100, -10, -10):
         chart += str(i).rjust(3) + "| "
-        for spending in spending_percentage:
-            if spending < i:
+        for percentage in percentages:
+            if percentage < i:
                 chart += "   "
-            elif spending >= i:
+            elif percentage >= i:
                 chart += "o  "
         chart += "\n"
     chart += "    -" + ("---" * (len(category_names))) + "\n"
 
     # create the title of budget name
-    len_cat_name = 0
-    for cat_name in category_names:
-        if len(cat_name) > len_cat_name:
-            len_cat_name = len(cat_name)
+    chart_length = 0
+    for name in category_names:
+        if len(name) > chart_length:
+            chart_length = len(name)
 
-    for i in range(len_cat_name):
+    for i in range(chart_length):
         chart += "     "
-        for cat_name in category_names:
-            if i > len(cat_name[:i]):
+        for name in category_names:
+            if i > len(name[:i]):
                 chart += "   "
-            elif len(cat_name) > i:
-                chart += cat_name[i] + "  "
+            elif len(name) > i:
+                chart += name[i] + "  "
             else:
                 chart += "   "
-        chart += "\n"
-
+        if i < chart_length-1:
+            chart += "\n"
 
     return chart
