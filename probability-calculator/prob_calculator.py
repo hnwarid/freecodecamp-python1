@@ -11,12 +11,9 @@ class Hat:
         self.balls_data = kwargs
 
     def draw(self, num):
-        # balls = copy.deepcopy(self.contents)  # put this in the function instead?
-        # no this removes balls from the list, gotta create a new list for balls drawn
         balls = list()
         balls_num = min(num, len(self.contents))
         for ball in range(balls_num):
-            # balls.pop(random.randrange(len(balls)))
             index_ball = random.randint(0, len(self.contents)-1)
             balls.append(self.contents.pop(index_ball))
         return balls
@@ -46,21 +43,6 @@ def experiment(hat, expected_balls, num_balls_drawn, num_experiments):
                 break
         if similar == True:
             m += 1
-            # for sum_amount in sum_balls.values():  #  sum_color,
-            #     try:
-            #         if sum_balls[] >= expected_balls[exp_color]:
-            #             m += 1
-            #     except Exception as e:
-            #         print(e)
-
-        # c_balls = []
-        # for exp_color, exp_count in expected_balls.items():
-            # c_balls += [exp_ball] * exp_count
-            # if exp_count <= count(c_balls[exp_ball]):
-            # print(exp_count, sum_balls[exp_color])
-                    # m += 1
-            #         print(successful_draw)
-
     return round(m/num_experiments, 3)
 
 # if __name__ == "__main__":
